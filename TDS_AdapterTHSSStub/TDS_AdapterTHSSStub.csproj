@@ -151,6 +151,7 @@
     <Content Include="packages.config" />
     <None Include="App_Data\reportxml_os.xsd">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Properties\PublishProfiles\adapter_thss_stub.pubxml" />
     <None Include="Web.Debug.config">

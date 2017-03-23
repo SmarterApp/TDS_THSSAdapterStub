@@ -21,6 +21,13 @@ namespace TDS_AdapterTHSSStub.Controllers
         // Create a TestImportService to help get information from TDS Report.
         private ITestImportService _testImportService = new TestImportService();
 
+        public ActionResult Hello()
+        {
+            var json = Json("hello");
+            json.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return json;
+        }
+
         [System.Web.Mvc.HttpPost]
         public ActionResult Submit()
         {
@@ -54,7 +61,7 @@ namespace TDS_AdapterTHSSStub.Controllers
                             
                             _logger.Info(file.FileName + " : " + doc.OuterXml);
 
-                            string xsdPath = Server.MapPath("~/App_Data/reportxml_os.xsd");
+                            string xsdPath = Server.MapPath("~/bin/App_Data/reportxml_os.xsd");
                             string errorString = TSS.MVC.Helpers.SchemaHelper.Validate(xsdPath, doc);
                             string validationOutput = string.IsNullOrEmpty(errorString)
                                                             ? String.Empty
@@ -143,6 +150,7 @@ namespace TDS_AdapterTHSSStub.Controllers
 
             // Very important: this returns hand-score item types
             var responses = _testImportService.PopulateItemsFromTdsReport(tdsReport);
+            _logger.Info("Number of hand score items in TDS Report: " + responses.Count);
 
             // Automatically give each item a score of zero
             foreach (var response in responses)
@@ -166,7 +174,7 @@ namespace TDS_AdapterTHSSStub.Controllers
                 };
 
                 // Automatic score of 0
-                assignment.ScoreData = "<score><dimension><score>0</score></dimension></score>";
+                assignment.ScoreData = "<score><dimension><score>0</score><conditioncode></conditioncode></dimension></score>";
 
                 scoredResponses.Add(assignment);
             }
