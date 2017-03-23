@@ -15,7 +15,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>TDS_AdapterTHSSStub</RootNamespace>
     <AssemblyName>TDS_AdapterTHSSStub</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -24,6 +24,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -59,16 +60,13 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Web.Razor">
@@ -106,19 +104,47 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AIR_Common\Xml\readme.txt" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AIR_Common\Gaurd.cs" />
+    <Compile Include="AIR_Common\Xml\IXmlSerializableExt.cs" />
+    <Compile Include="AIR_Common\Xml\XmlCDataText.cs" />
+    <Compile Include="AIR_Common\Xml\XmlFragmentReader.cs" />
+    <Compile Include="AIR_Common\Xml\XmlLocalResolver.cs" />
+    <Compile Include="AIR_Common\Xml\XmlSanitizingStream.cs" />
+    <Compile Include="AIR_Common\Xml\XmlWrappingReader.cs" />
+    <Compile Include="AIR_Common\Xml\XmlWrappingWriter.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\EnumHelper.cs" />
+    <Compile Include="Helpers\GuidHelper.cs" />
     <Compile Include="Helpers\SchemaHelper.cs" />
-    <Compile Include="Models\TestSubmitApiResultModel.cs" />
+    <Compile Include="Logging\ILogger.cs" />
+    <Compile Include="Logging\Logger.cs" />
+    <Compile Include="Models\Input\DataModel\Class.cs" />
+    <Compile Include="Models\Input\ItemScoreRequest.cs" />
+    <Compile Include="Models\Input\ItemTypeJson.cs" />
+    <Compile Include="Models\Input\TDSReport.cs" />
+    <Compile Include="Models\Input\TestSubmitApiResultModel.cs" />
+    <Compile Include="Models\Output\ItemScore.cs" />
+    <Compile Include="Models\Output\ItemScoreInfo.cs" />
+    <Compile Include="Models\Output\ItemScoreResponse.cs" />
+    <Compile Include="Models\Output\Proposition.cs" />
+    <Compile Include="Models\Output\ScoreRationale.cs" />
+    <Compile Include="Models\Output\ScoringStatus.cs" />
+    <Compile Include="Models\Output\VarBinding.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ExportService\ExportService.cs" />
+    <Compile Include="Services\ExportService\IExportService.cs" />
+    <Compile Include="Services\ImportService\ITestImportService.cs" />
+    <Compile Include="Services\ImportService\TestImportService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -136,24 +162,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Test\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Logging\Logging.csproj">
-      <Project>{CB9D8C85-43F8-4143-824B-4D954DB12A7C}</Project>
-      <Name>Logging</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TSS.Domain\TSS.Domain.csproj">
-      <Project>{8def56cd-601e-443c-9dce-c4ec54c0b6a6}</Project>
-      <Name>TSS.Domain</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TSS.Infrastructure\TSS.Data.csproj">
-      <Project>{9544d94b-9b6e-4b61-8a09-88382205bf86}</Project>
-      <Name>TSS.Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TSS.Services\TSS.Services.csproj">
-      <Project>{c9aac14b-e695-4508-83b7-acb8fc5a7284}</Project>
-      <Name>TSS.Services</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

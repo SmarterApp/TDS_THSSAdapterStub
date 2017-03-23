@@ -4,19 +4,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TDS_AdapterTHSSStub", "TDS_AdapterTHSSStub\TDS_AdapterTHSSStub.csproj", "{2491B4A5-2675-41D8-A48F-03D126A54B94}"
-	ProjectSection(ProjectDependencies) = postProject
-		{C9AAC14B-E695-4508-83B7-ACB8FC5A7284} = {C9AAC14B-E695-4508-83B7-ACB8FC5A7284}
-		{9544D94B-9B6E-4B61-8A09-88382205BF86} = {9544D94B-9B6E-4B61-8A09-88382205BF86}
-		{8DEF56CD-601E-443C-9DCE-C4EC54C0B6A6} = {8DEF56CD-601E-443C-9DCE-C4EC54C0B6A6}
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logging", "Logging\Logging.csproj", "{CB9D8C85-43F8-4143-824B-4D954DB12A7C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TSS.Domain", "TSS.Domain\TSS.Domain.csproj", "{8DEF56CD-601E-443C-9DCE-C4EC54C0B6A6}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TSS.Data", "TSS.Infrastructure\TSS.Data.csproj", "{9544D94B-9B6E-4B61-8A09-88382205BF86}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TSS.Services", "TSS.Services\TSS.Services.csproj", "{C9AAC14B-E695-4508-83B7-ACB8FC5A7284}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -28,22 +15,6 @@ Global
 		{2491B4A5-2675-41D8-A48F-03D126A54B94}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2491B4A5-2675-41D8-A48F-03D126A54B94}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2491B4A5-2675-41D8-A48F-03D126A54B94}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CB9D8C85-43F8-4143-824B-4D954DB12A7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CB9D8C85-43F8-4143-824B-4D954DB12A7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CB9D8C85-43F8-4143-824B-4D954DB12A7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CB9D8C85-43F8-4143-824B-4D954DB12A7C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8DEF56CD-601E-443C-9DCE-C4EC54C0B6A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8DEF56CD-601E-443C-9DCE-C4EC54C0B6A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8DEF56CD-601E-443C-9DCE-C4EC54C0B6A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8DEF56CD-601E-443C-9DCE-C4EC54C0B6A6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9544D94B-9B6E-4B61-8A09-88382205BF86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9544D94B-9B6E-4B61-8A09-88382205BF86}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9544D94B-9B6E-4B61-8A09-88382205BF86}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9544D94B-9B6E-4B61-8A09-88382205BF86}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C9AAC14B-E695-4508-83B7-ACB8FC5A7284}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C9AAC14B-E695-4508-83B7-ACB8FC5A7284}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C9AAC14B-E695-4508-83B7-ACB8FC5A7284}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C9AAC14B-E695-4508-83B7-ACB8FC5A7284}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

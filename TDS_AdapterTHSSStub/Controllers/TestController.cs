@@ -1,5 +1,6 @@
 ﻿using Logging;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Web;
@@ -8,17 +9,17 @@ using System.Xml;
 using System.Xml.Serialization;
 using TDS_AdapterTHSSStub.Models;
 using TSS.Domain;
+using TSS.Domain.DataModel;
 using TSS.Services;
 
 namespace TDS_AdapterTHSSStub.Controllers
 {
     public class TestController : Controller
     {
-        private ILogger _logger = new Logger();
+        private static ILogger _logger = new Logger();
 
         // Create a TestImportService to help get information from TDS Report.
-        // No need for a TestImportRepository since nothing is dealing with persistence.
-        private ITestImportService _testImportService = new TestImportService(null);
+        private ITestImportService _testImportService = new TestImportService();
 
         [System.Web.Mvc.HttpPost]
         public ActionResult Submit()
@@ -26,13 +27,17 @@ namespace TDS_AdapterTHSSStub.Controllers
             var apiResult = new TestSubmitApiResultModel();
             if (Request.Files.Count > 0)
             {
-                var fileResult = new TestSubmitApiResultFileModel();
-                try
-                {
-                    foreach (string fileName in Request.Files)
-                    {
-                        fileResult.Success = false;
+                // Store automatically scored responses for all file and hand-score items
+                List<StudentResponseAssignment> scoredResponses = new List<StudentResponseAssignment>();
 
+                foreach (string fileName in Request.Files)
+                {
+                    var fileResult = new TestSubmitApiResultFileModel();
+                    apiResult.Files.Add(fileResult);
+
+                    fileResult.Success = false;
+                    try
+                    {
                         HttpPostedFileBase file = Request.Files[fileName];
                         if (file != null && file.ContentLength > 0)
                         {
@@ -52,8 +57,8 @@ namespace TDS_AdapterTHSSStub.Controllers
                             string xsdPath = Server.MapPath("~/App_Data/reportxml_os.xsd");
                             string errorString = TSS.MVC.Helpers.SchemaHelper.Validate(xsdPath, doc);
                             string validationOutput = string.IsNullOrEmpty(errorString)
-                                                          ? String.Empty
-                                                          : " File is not in a correct format. Validation Error:" +
+                                                            ? String.Empty
+                                                            : " File is not in a correct format. Validation Error:" +
                                                             errorString;
 
                             if (string.IsNullOrEmpty(errorString))
@@ -68,14 +73,14 @@ namespace TDS_AdapterTHSSStub.Controllers
                                     memoryStream.Close();
                                     binReader.Close();
 
-                                    ProcessScoreRequest(itemScoreRequest);
+                                    scoredResponses.AddRange(ProcessScoreRequest(itemScoreRequest));
 
                                     fileResult.Success = true;
                                 }
                                 catch (Exception ex)
                                 {
                                     fileResult.ErrorMessage = "There was an error processing the file. " + ex.Message +
-                                                              ex.StackTrace;
+                                                                ex.StackTrace;
                                     fileResult.Success = false;
                                     
                                     _logger.Error(fileResult.ErrorMessage, ex);
@@ -99,88 +104,74 @@ namespace TDS_AdapterTHSSStub.Controllers
                         }
 
                     }
+                    catch (Exception exp)
+                    {
+                        fileResult.ErrorMessage = exp.Message + exp.StackTrace;
+                        fileResult.Success = false;
+                        _logger.Error("Error", exp);
+                    }
                 }
-                catch (Exception exp)
+
+                // Submit the scored responses asynchronously
+                System.Threading.Timer timer = null;
+                timer = new System.Threading.Timer((obj) =>
                 {
-                    fileResult.ErrorMessage = exp.Message + exp.StackTrace;
-                    fileResult.Success = false;
-                    _logger.Error("Error", exp);
-                }
-                apiResult.Files.Add(fileResult);
+                    // Create an ExportService to send scored results back to TIS.
+                    IExportService _exportService = new ExportService(_logger);
+
+                    foreach (var scoredResponse in scoredResponses)
+                    {
+                        _exportService.SendScoreReport(scoredResponse);
+                    }
+
+                    timer.Dispose();
+                }, null, 1000, System.Threading.Timeout.Infinite);
             }
+            
             return Json(apiResult);
         }
 
-        private void ProcessScoreRequest(ItemScoreRequest itemScoreRequest)
+        private List<StudentResponseAssignment> ProcessScoreRequest(ItemScoreRequest itemScoreRequest)
         {
+            List<StudentResponseAssignment> scoredResponses = new List<StudentResponseAssignment>();
+
             var tdsReport = itemScoreRequest.TDSReport;
             var district = _testImportService.PopulateDistrictFromTdsReport(tdsReport);
-            //var school = _testImportService.PopulateSchoolFromTdsReport(tdsReport);
-            //school.DistrictID = district.DistrictID;
-//            _testRepository = new TestImportRepository();
-            // insert/update district and school
-            //_testRepository.SaveDistrictAndSchool(district, school, district.DistrictID);
-            // insert/update test
             var test = _testImportService.PopulateTestFromTdsReport(tdsReport);
-//            _testRepository.SaveTest(test, district.DistrictID);
-            //insert/update teacher
             var teacher = _testImportService.PopulateTeacherFromTdsReport(tdsReport);
-//            _testRepository.SaveTeacher(teacher, district.DistrictID);
-            //insert/update student
             var student = _testImportService.PopulateStudentFromTdsReport(tdsReport);
-//            _testRepository.SaveStudent(student, district.DistrictID);
 
-            //insert/update assignments and responses
-            StringBuilder xmlInputs = new StringBuilder();
-            XmlWriterSettings xmlWriterSettings = new XmlWriterSettings();
-            xmlWriterSettings.Encoding = Encoding.UTF8;
-            // returns all items from tdsReport that have status NOT SCORED and that have a matching item type in the system
-            using (XmlWriter xmlWriter = XmlWriter.Create(xmlInputs, xmlWriterSettings))
+            // Very important: this returns hand-score item types
+            var responses = _testImportService.PopulateItemsFromTdsReport(tdsReport);
+
+            // Automatically give each item a score of zero
+            foreach (var response in responses)
             {
-                xmlWriter.WriteStartDocument();
-                xmlWriter.WriteStartElement("Root");
-                xmlWriter.WriteStartElement("Assignment");
-                xmlWriter.WriteAttributeString("TestId", test.TestId);
-                xmlWriter.WriteAttributeString("TeacherId", teacher.TeacherID);
-                xmlWriter.WriteAttributeString("StudentId", student.StudentId.ToString());
-                //xmlWriter.WriteAttributeString("SchoolId", school.SchoolID);
-                xmlWriter.WriteAttributeString("SessionId", tdsReport.Opportunity.sessionId);
-                xmlWriter.WriteAttributeString("OpportunityId", tdsReport.Opportunity.oppId);
-                xmlWriter.WriteAttributeString("OpportunityKey", tdsReport.Opportunity.key);
-                xmlWriter.WriteAttributeString("ClientName", tdsReport.Opportunity.clientName);
-                xmlWriter.WriteAttributeString("CallbackUrl", itemScoreRequest.callbackUrl);
-                xmlWriter.WriteEndElement();//end of assignment node
-                xmlWriter.WriteStartElement("ItemList");
-                var responses = _testImportService.PopulateItemsFromTdsReport(tdsReport);
-                foreach (var response in responses)
-                {
+                StudentResponseAssignment assignment = new StudentResponseAssignment();
+                assignment.Test = test;
+                assignment.Teacher = teacher;
+                assignment.Student = student;
+                assignment.SessionId = tdsReport.Opportunity.sessionId;
+                assignment.OpportunityId = long.Parse(tdsReport.Opportunity.oppId);
+                assignment.OpportunityKey = Guid.Parse(tdsReport.Opportunity.key);
+                assignment.ClientName = tdsReport.Opportunity.clientName;
+                assignment.CallbackUrl = itemScoreRequest.callbackUrl;
 
-                    xmlWriter.WriteStartElement("Item");
-                    xmlWriter.WriteAttributeString("ItemKey", response.ItemKey.ToString());
-                    xmlWriter.WriteAttributeString("BankKey", response.BankKey.ToString());
-                    xmlWriter.WriteAttributeString("ContentLevel", response.ContentLevel);
-                    xmlWriter.WriteAttributeString("Format", response.Format);
-                    xmlWriter.WriteAttributeString("SegmentId", response.SegmentId);
-                    xmlWriter.WriteAttributeString("ScoreStatus", response.ScoreStatus.ToString());
-                    xmlWriter.WriteAttributeString("ResponseDate", response.ResponseDate.ToString());
-                    xmlWriter.WriteStartElement("Response");
-                    // xmlWriter.WriteString("<![CDATA[" + response.Response + "]]>");
-                    // xmlWriter.WriteString(response.Response);
-                    xmlWriter.WriteCData(response.Response);
-                    xmlWriter.WriteEndElement();//end of response node
-                    xmlWriter.WriteEndElement(); //end of item node
-                }
-                xmlWriter.WriteEndElement();//end of itemlist node
-                xmlWriter.WriteEndElement();//end of root node
-                xmlWriter.Close();
+                // Data from loop
+                assignment.StudentResponse = new StudentResponse
+                {
+                    BankKey = response.BankKey,
+                    ItemKey = response.ItemKey,
+                    Format = response.Format
+                };
+
+                // Automatic score of 0
+                assignment.ScoreData = "<score><dimension><score>0</score></dimension></score>";
+
+                scoredResponses.Add(assignment);
             }
-//            bool fail = _testRepository.BatchProcessAssingmentAndResponse(xmlInputs.ToString(), district.DistrictID);
-//            if (fail)
-//            {
-//                string failure = "SQL Error when processing test assignments and responses on: ";
-//                failure = failure + xmlInputs.ToString();
-//                throw new Exception(failure);
-//            }
+
+            return scoredResponses;
         }
 
         // api/test/successresponse - xml
