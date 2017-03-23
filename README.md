@@ -33,7 +33,9 @@ TIS must be configured to submit hand-scored items to this application so those
 items can be automatically scored.  Configure the TISService (aka OSS_TISService)
 Windows Service component with the following suggested settings:
 
-``` App.config (aka TISService.exe.config, TISService.vhost.exe.config)
+App.config (aka TISService.exe.config, TISService.vhost.exe.config)
+```
+#!xml
 <WebServiceSettings>
   <WebService name="HandscoringTSS" url="http://localhost/adapter_thss_stub/test/submit" />
   <!-- The rest of the existing WebServiceSettings go here -->
