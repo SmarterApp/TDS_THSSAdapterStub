@@ -126,6 +126,7 @@ namespace TSS.Services
             JObject j = new JObject();
             if (dimensionName == "Initial") j.Add("scorerID", scorerID);
             if (!String.IsNullOrEmpty(conditionCode)) j.Add("conditionCode", conditionCode);
+            j.Add("automatedScore", true);
             cdata.Value = JsonConvert.SerializeObject(j);
             m.Add(cdata);
             rationale.Add(m);
