@@ -239,6 +239,146 @@ namespace TSS.Services
                 throw new Exception("Error Populating Test Data from TDS Report", e);
             }
         }
+
+        // IRP Items
+        private static List<ItemType> ITEM_TYPES = new List<ItemType>
+        {
+            // Hand score items
+            new ItemType { BankKey = 187, ItemKey = 1432 },
+            new ItemType { BankKey = 187, ItemKey = 2061 },
+            new ItemType { BankKey = 187, ItemKey = 2063 },
+            new ItemType { BankKey = 187, ItemKey = 2129 },
+            new ItemType { BankKey = 187, ItemKey = 2458 },
+            new ItemType { BankKey = 187, ItemKey = 2491 },
+            new ItemType { BankKey = 187, ItemKey = 2492 },
+            new ItemType { BankKey = 187, ItemKey = 2493 },
+            new ItemType { BankKey = 187, ItemKey = 2558 },
+            new ItemType { BankKey = 187, ItemKey = 2595 },
+            new ItemType { BankKey = 187, ItemKey = 2615 },
+            new ItemType { BankKey = 187, ItemKey = 2616 },
+            new ItemType { BankKey = 187, ItemKey = 2630 },
+            new ItemType { BankKey = 187, ItemKey = 2635 },
+            new ItemType { BankKey = 187, ItemKey = 2636 },
+            new ItemType { BankKey = 187, ItemKey = 2638 },
+            new ItemType { BankKey = 187, ItemKey = 2644 },
+            new ItemType { BankKey = 187, ItemKey = 2645 },
+            new ItemType { BankKey = 187, ItemKey = 2684 },
+            new ItemType { BankKey = 187, ItemKey = 2700 },
+            new ItemType { BankKey = 187, ItemKey = 2701 },
+            new ItemType { BankKey = 187, ItemKey = 2703 },
+            new ItemType { BankKey = 187, ItemKey = 2704 },
+            new ItemType { BankKey = 187, ItemKey = 2709 },
+            // Machine scored types are added here just in case they need a score
+            new ItemType { BankKey = 187, ItemKey = 1434 },
+            new ItemType { BankKey = 187, ItemKey = 1793 },
+            new ItemType { BankKey = 187, ItemKey = 1825 },
+            new ItemType { BankKey = 187, ItemKey = 1827 },
+            new ItemType { BankKey = 187, ItemKey = 1832 },
+            new ItemType { BankKey = 187, ItemKey = 1835 },
+            new ItemType { BankKey = 187, ItemKey = 1838 },
+            new ItemType { BankKey = 187, ItemKey = 1839 },
+            new ItemType { BankKey = 187, ItemKey = 1840 },
+            new ItemType { BankKey = 187, ItemKey = 1842 },
+            new ItemType { BankKey = 187, ItemKey = 1844 },
+            new ItemType { BankKey = 187, ItemKey = 1873 },
+            new ItemType { BankKey = 187, ItemKey = 1876 },
+            new ItemType { BankKey = 187, ItemKey = 1881 },
+            new ItemType { BankKey = 187, ItemKey = 1882 },
+            new ItemType { BankKey = 187, ItemKey = 1883 },
+            new ItemType { BankKey = 187, ItemKey = 1889 },
+            new ItemType { BankKey = 187, ItemKey = 1899 },
+            new ItemType { BankKey = 187, ItemKey = 1915 },
+            new ItemType { BankKey = 187, ItemKey = 1916 },
+            new ItemType { BankKey = 187, ItemKey = 1926 },
+            new ItemType { BankKey = 187, ItemKey = 1929 },
+            new ItemType { BankKey = 187, ItemKey = 1930 },
+            new ItemType { BankKey = 187, ItemKey = 1936 },
+            new ItemType { BankKey = 187, ItemKey = 1948 },
+            new ItemType { BankKey = 187, ItemKey = 1956 },
+            new ItemType { BankKey = 187, ItemKey = 1966 },
+            new ItemType { BankKey = 187, ItemKey = 1969 },
+            new ItemType { BankKey = 187, ItemKey = 1972 },
+            new ItemType { BankKey = 187, ItemKey = 1973 },
+            new ItemType { BankKey = 187, ItemKey = 1975 },
+            new ItemType { BankKey = 187, ItemKey = 1976 },
+            new ItemType { BankKey = 187, ItemKey = 1978 },
+            new ItemType { BankKey = 187, ItemKey = 1979 },
+            new ItemType { BankKey = 187, ItemKey = 1982 },
+            new ItemType { BankKey = 187, ItemKey = 1983 },
+            new ItemType { BankKey = 187, ItemKey = 1986 },
+            new ItemType { BankKey = 187, ItemKey = 1987 },
+            new ItemType { BankKey = 187, ItemKey = 1988 },
+            new ItemType { BankKey = 187, ItemKey = 1991 },
+            new ItemType { BankKey = 187, ItemKey = 1996 },
+            new ItemType { BankKey = 187, ItemKey = 1997 },
+            new ItemType { BankKey = 187, ItemKey = 1998 },
+            new ItemType { BankKey = 187, ItemKey = 1999 },
+            new ItemType { BankKey = 187, ItemKey = 2001 },
+            new ItemType { BankKey = 187, ItemKey = 2005 },
+            new ItemType { BankKey = 187, ItemKey = 2006 },
+            new ItemType { BankKey = 187, ItemKey = 2015 },
+            new ItemType { BankKey = 187, ItemKey = 2017 },
+            new ItemType { BankKey = 187, ItemKey = 2024 },
+            new ItemType { BankKey = 187, ItemKey = 2029 },
+            new ItemType { BankKey = 187, ItemKey = 2032 },
+            new ItemType { BankKey = 187, ItemKey = 2059 },
+            new ItemType { BankKey = 187, ItemKey = 2060 },
+            new ItemType { BankKey = 187, ItemKey = 2118 },
+            new ItemType { BankKey = 187, ItemKey = 2129 },
+            new ItemType { BankKey = 187, ItemKey = 2131 },
+            new ItemType { BankKey = 187, ItemKey = 2454 },
+            new ItemType { BankKey = 187, ItemKey = 2458 },
+            new ItemType { BankKey = 187, ItemKey = 2462 },
+            new ItemType { BankKey = 187, ItemKey = 2463 },
+            new ItemType { BankKey = 187, ItemKey = 2467 },
+            new ItemType { BankKey = 187, ItemKey = 2472 },
+            new ItemType { BankKey = 187, ItemKey = 2491 },
+            new ItemType { BankKey = 187, ItemKey = 2492 },
+            new ItemType { BankKey = 187, ItemKey = 2493 },
+            new ItemType { BankKey = 187, ItemKey = 2497 },
+            new ItemType { BankKey = 187, ItemKey = 2498 },
+            new ItemType { BankKey = 187, ItemKey = 2500 },
+            new ItemType { BankKey = 187, ItemKey = 2510 },
+            new ItemType { BankKey = 187, ItemKey = 2521 },
+            new ItemType { BankKey = 187, ItemKey = 2524 },
+            new ItemType { BankKey = 187, ItemKey = 2526 },
+            new ItemType { BankKey = 187, ItemKey = 2529 },
+            new ItemType { BankKey = 187, ItemKey = 2561 },
+            new ItemType { BankKey = 187, ItemKey = 2564 },
+            new ItemType { BankKey = 187, ItemKey = 2565 },
+            new ItemType { BankKey = 187, ItemKey = 2567 },
+            new ItemType { BankKey = 187, ItemKey = 2570 },
+            new ItemType { BankKey = 187, ItemKey = 2572 },
+            new ItemType { BankKey = 187, ItemKey = 2576 },
+            new ItemType { BankKey = 187, ItemKey = 2577 },
+            new ItemType { BankKey = 187, ItemKey = 2578 },
+            new ItemType { BankKey = 187, ItemKey = 2579 },
+            new ItemType { BankKey = 187, ItemKey = 2590 },
+            new ItemType { BankKey = 187, ItemKey = 2591 },
+            new ItemType { BankKey = 187, ItemKey = 2594 },
+            new ItemType { BankKey = 187, ItemKey = 2597 },
+            new ItemType { BankKey = 187, ItemKey = 2601 },
+            new ItemType { BankKey = 187, ItemKey = 2603 },
+            new ItemType { BankKey = 187, ItemKey = 2604 },
+            new ItemType { BankKey = 187, ItemKey = 2610 },
+            new ItemType { BankKey = 187, ItemKey = 2616 },
+            new ItemType { BankKey = 187, ItemKey = 2622 },
+            new ItemType { BankKey = 187, ItemKey = 2624 },
+            new ItemType { BankKey = 187, ItemKey = 2626 },
+            new ItemType { BankKey = 187, ItemKey = 2627 },
+            new ItemType { BankKey = 187, ItemKey = 2637 },
+            new ItemType { BankKey = 187, ItemKey = 2643 },
+            new ItemType { BankKey = 187, ItemKey = 2659 },
+            new ItemType { BankKey = 187, ItemKey = 2660 },
+            new ItemType { BankKey = 187, ItemKey = 2661 },
+            new ItemType { BankKey = 187, ItemKey = 2684 },
+            new ItemType { BankKey = 187, ItemKey = 2685 },
+            new ItemType { BankKey = 187, ItemKey = 2702 },
+            new ItemType { BankKey = 187, ItemKey = 2704 },
+            new ItemType { BankKey = 187, ItemKey = 2705 },
+            new ItemType { BankKey = 187, ItemKey = 2707 }
+        };
+        
         /// <summary>
         /// This is where we import all the things from TDS XML report.  
         /// There are a couple of assumptions we make here:
@@ -251,7 +391,7 @@ namespace TSS.Services
         {
             try
             {
-                List<ItemType> itemTypes = new List<ItemType> { new ItemType() { BankKey = 187, ItemKey = 2000 } }; //ItemConfigSingleton.Instance.LoadItemTypes();
+                List<ItemType> itemTypes = ITEM_TYPES;
                 var responses = new List<StudentResponse>();
 
                 // We need to include some responses that may be scored, but have dependent responses.
@@ -261,7 +401,7 @@ namespace TSS.Services
                 foreach (var item in tdsReport.Opportunity.Item)
                 {
                     //if an item hasn’t been configured in THSS – ignore the item.
-                    ItemType currentItem = itemTypes.Find(ci => ci.HandScored);
+                    ItemType currentItem = itemTypes.Find(ci => ci.ItemKey == item.key && ci.BankKey == item.bankKey);
                     if (currentItem == null)
                     {
                         continue;
@@ -311,7 +451,8 @@ namespace TSS.Services
                 {
                     StudentResponse testResponse = allResponses[key];
                     ItemType currentItem =
-                        itemTypes.Find(ci => ci.HandScored);
+                        itemTypes.Find(ci => ci.ItemKey == testResponse.ItemKey &&
+                                             ci.BankKey == testResponse.BankKey);
 
                     //If the item is not already scored, we for sure want it.
                     if (testResponse.ScoreStatus != 2)
