@@ -13,10 +13,14 @@ generated fully scored TDS Report XML documents.
 
 This component/application was primarily developed for use with IRP 2.0
 and the IRP Automation Adapter.  Therefore, this application has hard-coded
-IRP Items into the TestImportService class. See TestImportService.cs and look for
+IRP Items into the TestImportService class.  See TestImportService.cs and look for
 'ITEM_TYPES'.
 
 This component will automatically score all items it receives with a score of zero. 
+
+To change the score or to program custom scoring logic, look at TestController.cs for the 
+method `ProcessScoreRequest` and the line `assignment.ScoreData`.  The XML 
+string value saved into `assignment.ScoreData` contains the score.
 
 Deployment/Installation
 -----------------------
@@ -25,6 +29,14 @@ This project is a .NET 4.5 Web API application developed using Visual Studio 201
 To use this application, use the Publish feature in Visual Studio to publish
 the TDS_AdapterTHSSStub project to an IIS configured directory.  Or deploy it 
 according to your own organization's .NET deployment strategy.
+
+After deploying this application, it will process item scoring requests at the
+URL:
+
+`http://localhost/<path to application>/test/submit`
+
+Where `<path to application>` represents the location you configured IIS to 
+host this application.
 
 Test Integration Service (TIS) Configuration
 --------------------------------------------
