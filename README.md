@@ -8,7 +8,7 @@ when using the IRP Automation Adapter to automate the process of generating
 TDS Report XML documents.  When the IRP Automation Adapter is run against
 a deployment of the SBAC Open Source Assessment Delivery System, the Test
 Integration Service will need a component to score hand-scored items, such as
-ER, WER, SA, and WIT, automatically.  Otherwise, TIS will not be able to 
+ER, WER, and SA, automatically.  Otherwise, TIS will not be able to 
 generated fully scored TDS Report XML documents.  
 
 This component/application was primarily developed for use with IRP 2.0
@@ -56,7 +56,7 @@ App.config (aka TISService.exe.config, TISService.vhost.exe.config)
 <ItemScoringSettings>
   <ItemScoring target="HandscoringTSS"
 	callbackUrl="http://localhost/oss_tis_itemscoring/ItemScoringCallbackRcv.axd"
-	itemTypes="ER;WIT;SA;WER;EBSR;EQ;ETC;GI;HT;HTQ;MC;MI;MS;NL;TI"
+	itemTypes="ER;SA;WER;WIT;EBSR;EQ;ETC;GI;HT;HTQ;MC;MI;MS;NL;TI"
 	isHandscoringTarget="true"
 	batchRequest="true"
 	scoreStatuses="NotScored,WaitingForMachineScore,ScoringError"/>
