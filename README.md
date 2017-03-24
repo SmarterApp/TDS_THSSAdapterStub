@@ -20,7 +20,8 @@ This component will automatically score all items it receives with a score of ze
 
 To change the score or to program custom scoring logic, look at TestController.cs for the 
 method `ProcessScoreRequest` and the line `assignment.ScoreData`.  The XML 
-string value saved into `assignment.ScoreData` contains the score.
+string value saved into `assignment.ScoreData` contains the score. However, it's recommended to preserve the feature of scoring all items with a score of zero as 
+IRP might expect those items to have those scores in the future.
 
 Deployment/Installation
 -----------------------
